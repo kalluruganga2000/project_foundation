@@ -2,27 +2,33 @@ package com.Whatsapp.controller;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.Whatsapp.entity.WhatsappUser;
 import com.Whatsapp.service.WhatsappService;
 import com.Whatsapp.service.WhatsappServiceInterface;
 
 public class WhatsappController implements WhatsappControllerInterface {
+	
+	Logger log=Logger.getLogger("WhatsappController");
+	//final static Logger log=Logger.getLogger("StudentController.class");
 
 	public void createProfileController() {
 		// TODO Auto-generated method stub
+		log.info("inside create profile method of controller");
+		
 		Scanner sc=new Scanner(System.in);
 		
-		System.out.println("enter name");
+		log.info("enter name");
 		String name=sc.next();
 		
-		System.out.println("enter password");
+		log.info("enter password");
 		String password=sc.next();
 		
-		System.out.println("enter email");
+		log.info("enter email");
 		String email=sc.next();
 		
-		System.out.println("enter address");
+		log.info("enter address");
 		String address=sc.next();
 		
 		WhatsappUser wu=new WhatsappUser();

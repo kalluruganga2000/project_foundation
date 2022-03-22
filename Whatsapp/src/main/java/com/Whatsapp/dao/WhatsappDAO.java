@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.Whatsapp.entity.WhatsappUser;
+
+import ganga.UserDefinedException;
 
 public class WhatsappDAO implements WhatsappDAOInterface {
 
@@ -20,6 +23,9 @@ public class WhatsappDAO implements WhatsappDAOInterface {
 			//step 2: create connection with database 
 			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","ganga");
 			//step3:how to write query using PreparedStatement
+			if(wu.getName().contentEquals("government")) {
+				throw new UserDefinedException();
+			}
 			PreparedStatement ps=con.prepareStatement("insert into WhatsappUser values(?,?,?,?)");
 			
 			ps.setString(1,wu.getName());
@@ -33,13 +39,21 @@ public class WhatsappDAO implements WhatsappDAOInterface {
 			i=ps.executeUpdate();
 			
 		}
-		catch(Exception e) {
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
+		catch(ClassNotFoundException e) {
+			System.out.println(e);
+			}
+		catch(UserDefinedException e) {
+			e.printStackTrace();
+		}
+		
 		return i;
+	}
 	
 
-}
+
 
 	public WhatsappUser viewProfileDAO(WhatsappUser wu) {
 		// TODO Auto-generated method stub
